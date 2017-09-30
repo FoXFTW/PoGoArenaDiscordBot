@@ -36,9 +36,9 @@ class ArenaDiffChecker implements CheckerInterface
         $wonArenas = new ArenaCollection();
 
         foreach ($this->oldArenas as $arenaID => $oldArena) {
-            if ($oldArena->getTeam()->getID() !== $this->newArenas[$arenaID]->getTeam()->getID() &&
+            if ($oldArena->getTeam()->getID() !== $this->newArenas[$arenaID]->getTeam()->getID()/* &&
                 $oldArena->getTeam()->getID() > 0 &&
-                $this->newArenas[$arenaID]->getTeam()->getID() > 0) {
+                $this->newArenas[$arenaID]->getTeam()->getID() > 0*/) {
 
                 if ($oldArena->getTeam()->getID() === TEAM_ID_TO_MONITOR) {
                     $lostArenas->addArena($this->newArenas[$arenaID]);

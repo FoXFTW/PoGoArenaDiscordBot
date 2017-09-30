@@ -60,16 +60,19 @@ class ArenaMessageGenerator implements MessageInterface
     private function parseArenaToString(Arena $arena, string $type): string
     {
         $platz = "Plätze";
-        if ($arena->getSlotsAvailable() === 1) {
-            $platz = "Platz";
-        }
 
         $string = "{$arena->getName()} (";
 
         if ($type === self::WON) {
+            if ($arena->getSlotsAvailable() === 1) {
+                $platz = "Platz";
+            }
             $string .= "{$arena->getTeam()->getEmoji()}".self::ARROW_EMOJI."{$this->teamToMonitor->getEmoji()})\n";
             $string .= ($arena->getSlotsAvailable() === 0 ? 'Keine' : $arena->getSlotsAvailable())." {$platz} frei\n";
         } else {
+            if ((6 - $arena->getSlotsAvailable()) === 1) {
+                $platz = "Platz";
+            }
             $string .= "{$this->teamToMonitor->getEmoji()}".self::ARROW_EMOJI."{$arena->getTeam()->getEmoji()})\n";
             $string .= (6 - $arena->getSlotsAvailable())." {$platz} besetzt\n";
         }

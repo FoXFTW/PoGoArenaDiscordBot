@@ -16,8 +16,8 @@ use GuzzleHttp\Exception\RequestException;
 class DiscordWebHook
 {
     private const WEBHOOK = 'https://discordapp.com/api/webhooks/';
-    private const NAME = 'Instinct Arena Bot';
-    private const AVATAR_URL = 'https://i.imgur.com/It36peS.jpg';
+    private const NAME = DISCORD_BOT_NAME;
+    private const AVATAR_URL = DISCORD_BOT_AVATAR;
 
     private $client;
 
