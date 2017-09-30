@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "d9f54def3b9e7c748e135c5c37d7e0ca",
+    "content-hash": "55f6c2e4bd979a78cd8c3aa41dfe6691",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -236,50 +236,12 @@
                 "response"
             ],
             "time": "2016-08-06T14:39:51+00:00"
-        },
-        {
-            "name": "xtechlabs/discordphp-webhook",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/proxikal/discordphp-webhook.git",
-                "reference": "92bafe9be6ccd4bb5071fa0d5b240269c2670e7f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/proxikal/discordphp-webhook/zipball/92bafe9be6ccd4bb5071fa0d5b240269c2670e7f",
-                "reference": "92bafe9be6ccd4bb5071fa0d5b240269c2670e7f",
-                "shasum": ""
-            },
-            "require-dev": {
-                "symfony/var-dumper": "^3.1"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "xTechLabs\\Hooks\\": "src/xTechLabs"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Joshua Cleland",
-                    "email": "developer@xtclabs.net"
-                }
-            ],
-            "description": "Discord Webhook client.",
-            "time": "2016-11-26 18:06:19"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "xtechlabs/discordphp-webhook": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

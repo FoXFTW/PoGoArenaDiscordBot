@@ -42,7 +42,7 @@ class ArenaDiffChecker implements CheckerInterface
 
                 if ($oldArena->getTeam()->getID() === TEAM_ID_TO_MONITOR) {
                     $lostArenas->addArena($this->newArenas[$arenaID]);
-                } else {
+                } elseif ($this->newArenas[$arenaID]->getTeam()->getID() === TEAM_ID_TO_MONITOR) {
                     $wonArenas->addArena($oldArena);
                 }
             }

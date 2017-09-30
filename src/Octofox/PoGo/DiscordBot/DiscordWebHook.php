@@ -15,7 +15,7 @@ use GuzzleHttp\Exception\RequestException;
 
 class DiscordWebHook
 {
-    private const WEBHOOK = 'https://discordapp.com/api/webhooks/363324837273403396/OZaBIWdLeVvE3MTmFnpGOAA0IaQMJRzrxUUKF0dK_0wB5cBjRfD3jr7ipQ96igDZMXyi';
+    private const WEBHOOK = 'https://discordapp.com/api/webhooks/';
     private const NAME = 'Instinct Arena Bot';
     private const AVATAR_URL = 'https://i.imgur.com/It36peS.jpg';
 
@@ -25,7 +25,7 @@ class DiscordWebHook
     {
         $this->client = new Client(
             [
-                'base_uri' => self::WEBHOOK,
+                'base_uri' => self::WEBHOOK.DISCORD_WEBHOOK_ID,
             ]
         );
     }
