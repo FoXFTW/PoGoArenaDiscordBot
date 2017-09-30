@@ -9,11 +9,10 @@ namespace Octofox\PoGo\ArenaBot\Map\Requests;
 
 
 use GuzzleHttp\Client;
+use Octofox\PoGo\Config;
 
 abstract class AbstractBaseRequest
 {
-    public const BASE_URI = 'https://bs-pogo.de';
-
     protected static $client;
 
     public function __construct()
@@ -25,17 +24,26 @@ abstract class AbstractBaseRequest
     {
         return new Client(
             [
-                'base_uri' => self::BASE_URI,
+                'base_uri' => Config::getMapUrl(),
                 'headers'  => [
                     'Cookie'           => 'PHPSESSID=vcbugiopouirfdemep5et09dm4',
-                    'Origin'           => 'https://bs-pogo.de',
+                    'Origin'           => Config::getMapUrl(),
                     'User-Agent'       => 'Instinct Arena Bot @FoXFTW',
                     'Content-Type'     => 'application/x-www-form-urlencoded; charset=UTF-8',
                     'Accept'           => 'application/json',
-                    'Referer'          => 'https://bs-pogo.de/',
+                    'Referer'          => Config::getMapUrl(),
                     'X-Requested-With' => 'XMLHttpRequest',
                 ],
             ]
         );
+    }
+
+    protected function safeRequest(string $data): void
+    {
+        if (Config::getSafePolls()) {
+            $handle = fopen(BASE_PATH.Config::getStorageDir().'/raw_dadta-'.date('Y-m-d_His').'.json', 'w+');
+            fwrite($handle, $data);
+            fclose($handle);
+        }
     }
 }

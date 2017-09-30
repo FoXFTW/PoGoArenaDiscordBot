@@ -12,12 +12,11 @@ use GuzzleHttp\Exception\BadResponseException;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\RequestException;
+use Octofox\PoGo\Config;
 
 class DiscordWebHook
 {
-    private const WEBHOOK = 'https://discordapp.com/api/webhooks/';
-    private const NAME = DISCORD_BOT_NAME;
-    private const AVATAR_URL = DISCORD_BOT_AVATAR;
+    private const BASE_WEBHOOK_URL = 'https://discordapp.com/api/webhooks/';
 
     private $client;
 
@@ -25,7 +24,7 @@ class DiscordWebHook
     {
         $this->client = new Client(
             [
-                'base_uri' => self::WEBHOOK.DISCORD_WEBHOOK_ID,
+                'base_uri' => self::BASE_WEBHOOK_URL.Config::getDiscordWebhookId(),
             ]
         );
     }
@@ -38,8 +37,8 @@ class DiscordWebHook
                 [
                     'json' => [
                         'content'    => $message,
-                        'username'   => self::NAME,
-                        'avatar_url' => self::AVATAR_URL,
+                        'username'   => Config::getDiscordBotName(),
+                        'avatar_url' => Config::getDiscordAvatarUrl(),
                     ],
                 ]
             );

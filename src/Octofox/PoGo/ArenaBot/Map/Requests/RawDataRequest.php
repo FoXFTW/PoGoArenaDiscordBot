@@ -35,12 +35,7 @@ class RawDataRequest extends AbstractBaseRequest implements RequestInterface
         );
 
         $content = $request->getBody()->getContents();
-
-        if (SAFE_POLLS) {
-            $handle = fopen(STORAGE_DIR.'/raw'.date('Y-m-d_His').'.json', 'w+');
-            fwrite($handle, $content);
-            fclose($handle);
-        }
+        $this->safeRequest($content);
 
         return $content;
     }

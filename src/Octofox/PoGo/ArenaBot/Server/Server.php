@@ -9,17 +9,16 @@ namespace Octofox\PoGo\ArenaBot\Server;
 
 use GuzzleHttp\Exception\ClientException;
 use Octofox\PoGo\ArenaBot\Diff\Checker\ArenaDiffChecker;
-use Octofox\PoGo\DiscordBot\DiscordWebHook;
 use Octofox\PoGo\ArenaBot\Map\Collections\ArenaCollection;
 use Octofox\PoGo\ArenaBot\Map\Parser\ArenaParser;
 use Octofox\PoGo\ArenaBot\Map\Requests\Configs\RawDataConfig;
 use Octofox\PoGo\ArenaBot\Map\Requests\RawDataRequest;
+use Octofox\PoGo\Config;
+use Octofox\PoGo\DiscordBot\DiscordWebHook;
 use Octofox\PoGo\MessageGenerator\ArenaMessageGenerator;
 
 class Server
 {
-//    public const POLL_INTERVAL = 10;
-
     private $timeOfLastPoll;
     /** @var  \Octofox\PoGo\ArenaBot\Map\Collections\ArenaCollection */
     private $arenaCollection;
@@ -49,18 +48,27 @@ class Server
 
                 if ($this->arenaCollection->getHash() !== '') {
                     if (!$this->arenaCollection->equals($pollData)) {
+                        ConsoleLogger::info(
+                            "Arenas Changed. Old Hash: {$this->arenaCollection->getHash()} - New Hash: {$pollData->getHash()}"
+                        );
+
                         $message = $this->getDiffMessage($pollData);
-                        //echo $message;
                         if (!empty($message)) {
-                            ConsoleLogger::info("Arenas Changed. Old Hash: {$this->arenaCollection->getHash()} - New Hash: {$pollData->getHash()}");
+                            ConsoleLogger::info("Arena from monitored Team changed");
                             if (!$this->discordBot->sendMessage($message)) {
                                 ConsoleLogger::error("Sending Message to Discord Failed!");
                             }
                         }
+                    } else {
+                        ConsoleLogger::debug(
+                            "No changed Arenas. Old Hash: {$this->arenaCollection->getHash()} - New Hash: {$pollData->getHash()}"
+                        );
                     }
                 }
                 $this->arenaCollection = $pollData;
-                sleep(POLL_INTERVAL);
+
+                ConsoleLogger::debug('Sleeping for '.intval(Config::getPollInterval()).' seconds.');
+                sleep(intval(Config::getPollInterval()));
             }
         }
     }
@@ -72,7 +80,7 @@ class Server
 
     private function incrementPollTime(): void
     {
-        $this->timeOfLastPoll = time() + POLL_INTERVAL;
+        $this->timeOfLastPoll = time() + intval(Config::getPollInterval());
     }
 
     private function getParsedPollData(): ArenaCollection
@@ -81,6 +89,7 @@ class Server
 
         try {
             $this->arenaParser->setData($request->request());
+
             return $this->arenaParser->parse();
         } catch (ClientException $e) {
             ConsoleLogger::error("Polling failed with Message: {$e->getMessage()}");

@@ -6,7 +6,9 @@
  */
 
 require 'vendor/autoload.php';
-require 'config.php';
+
+define('BASE_PATH', __DIR__);
+\Octofox\PoGo\Config::load();
 
 $server = new \Octofox\PoGo\ArenaBot\Server\Server();
 $server->run();
