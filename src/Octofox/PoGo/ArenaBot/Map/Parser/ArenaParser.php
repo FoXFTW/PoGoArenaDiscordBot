@@ -8,7 +8,7 @@
 namespace Octofox\PoGo\ArenaBot\Map\Parser;
 
 use Octofox\PoGo\ArenaBot\Map\Entities\Arena\Arena;
-use Octofox\PoGo\ArenaBot\Exceptions\InvalidDataException;
+use Octofox\Exceptions\InvalidDataException;
 use Octofox\PoGo\ArenaBot\Map\Collections\ArenaCollection;
 use Octofox\PoGo\ArenaBot\Map\Helper\Position;
 use Octofox\PoGo\ArenaBot\Map\Teams\TeamFactory;
@@ -59,6 +59,6 @@ class ArenaParser
         $position = new Position($rawArenaData['latitude'], $rawArenaData['longitude']);
         $team = TeamFactory::getTeam($rawArenaData['team_id'] ?? 0);
 
-        return new Arena($rawArenaData['gym_id'], $rawArenaData['name'], intval($rawArenaData['slots_available']), $position, $team);
+        return new Arena($rawArenaData['gym_id'], $rawArenaData['name'] ?? 'No Name', intval($rawArenaData['slots_available']), $position, $team);
     }
 }

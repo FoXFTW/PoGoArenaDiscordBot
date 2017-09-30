@@ -5,7 +5,7 @@
  * Time: 19:42
  */
 
-namespace Octofox\PoGo\ArenaBot\Exceptions;
+namespace Octofox\Exceptions;
 
 class InvalidDataException extends \Exception
 {

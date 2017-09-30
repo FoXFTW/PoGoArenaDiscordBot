@@ -8,7 +8,7 @@
 namespace Octofox\PoGo\ArenaBot\Map\Requests\Configs;
 
 
-use Octofox\PoGo\ArenaBot\Exceptions\InvalidDataException;
+use Octofox\Exceptions\InvalidDataException;
 use Octofox\PoGo\ArenaBot\Map\Requests\AbstractBaseRequest;
 
 abstract class AbstractBaseConfig implements ConfigInterface
