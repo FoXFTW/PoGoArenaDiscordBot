@@ -10,6 +10,7 @@ namespace Octofox\PoGo\ArenaBot\Diff\Checker;
 use Octofox\PoGo\ArenaBot\Diff\ArenaDiff;
 use Octofox\PoGo\ArenaBot\Exceptions\InvalidDataException;
 use Octofox\PoGo\ArenaBot\Map\Collections\ArenaCollection;
+use Octofox\PoGo\ArenaBot\Map\Entities\Arena\Arena;
 
 class ArenaDiffChecker implements CheckerInterface
 {
@@ -36,14 +37,18 @@ class ArenaDiffChecker implements CheckerInterface
         $wonArenas = new ArenaCollection();
 
         foreach ($this->oldArenas as $arenaID => $oldArena) {
-            if ($oldArena->getTeam()->getID() !== $this->newArenas[$arenaID]->getTeam()->getID()/* &&
-                $oldArena->getTeam()->getID() > 0 &&
-                $this->newArenas[$arenaID]->getTeam()->getID() > 0*/) {
-
+            if ($oldArena->getTeam()->getID() !== $this->newArenas[$arenaID]->getTeam()->getID()) {
                 if ($oldArena->getTeam()->getID() === TEAM_ID_TO_MONITOR) {
                     $lostArenas->addArena($this->newArenas[$arenaID]);
                 } elseif ($this->newArenas[$arenaID]->getTeam()->getID() === TEAM_ID_TO_MONITOR) {
-                    $wonArenas->addArena($oldArena);
+                    $wonArena = new Arena(
+                        $oldArena->getID(),
+                        $oldArena->getName(),
+                        $this->newArenas[$arenaID]->getSlotsAvailable(),
+                        $oldArena->getPosition(),
+                        $oldArena->getTeam()
+                    );
+                    $wonArenas->addArena($wonArena);
                 }
             }
         }
