@@ -60,6 +60,7 @@ class Server
                     }
                 }
                 $this->arenaCollection = $pollData;
+                sleep(POLL_INTERVAL);
             }
         }
     }
