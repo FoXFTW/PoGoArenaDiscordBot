@@ -8,23 +8,24 @@
 namespace Octofox\PoGo\ArenaBot\Diff\Checker;
 
 use Octofox\PoGo\ArenaBot\Diff\ArenaDiff;
-use Octofox\PoGo\ArenaBot\Exceptions\InvalidDataException;
+use Octofox\Exceptions\InvalidDataException;
 use Octofox\PoGo\ArenaBot\Map\Collections\ArenaCollection;
 use Octofox\PoGo\ArenaBot\Map\Entities\Arena\Arena;
+use Octofox\PoGo\Config;
 
 class ArenaDiffChecker implements CheckerInterface
 {
     private $oldArenas;
     private $newArenas;
 
-    public function __construct(ArenaCollection $old, ArenaCollection $new)
+    public function __construct(ArenaCollection $oldArenas, ArenaCollection $newArenas)
     {
-        $this->oldArenas = $old->getArenas();
-        $this->newArenas = $new->getArenas();
+        $this->oldArenas = $oldArenas;
+        $this->newArenas = $newArenas;
 
-        if (count($old->getArenas()) !== count(($new->getArenas()))) {
+        if (count($oldArenas) !== count($newArenas)) {
             throw new InvalidDataException(
-                'Count mismatch! Old: '.count($old->getArenas()).' New: '.count($new->getArenas())
+                'Count mismatch! Old: '.count($oldArenas).' New: '.count($newArenas)
             );
         }
     }
@@ -37,14 +38,16 @@ class ArenaDiffChecker implements CheckerInterface
         $wonArenas = new ArenaCollection();
 
         foreach ($this->oldArenas as $arenaID => $oldArena) {
-            if ($oldArena->getTeam()->getID() !== $this->newArenas[$arenaID]->getTeam()->getID()) {
-                if ($oldArena->getTeam()->getID() === TEAM_ID_TO_MONITOR) {
-                    $lostArenas->addArena($this->newArenas[$arenaID]);
-                } elseif ($this->newArenas[$arenaID]->getTeam()->getID() === TEAM_ID_TO_MONITOR) {
+            if ($oldArena->getTeam()->getID() !== $this->newArenas->find($arenaID)->getTeam()->getID()) {
+                $newArena = $this->newArenas->find($arenaID);
+
+                if ($oldArena->getTeam()->getID() === intval(Config::getTeamIdToMonitor())) {
+                    $lostArenas->addArena($newArena);
+                } elseif ($newArena->getTeam()->getID() === intval(Config::getTeamIdToMonitor())) {
                     $wonArena = new Arena(
                         $oldArena->getID(),
                         $oldArena->getName(),
-                        $this->newArenas[$arenaID]->getSlotsAvailable(),
+                        $newArena->getSlotsAvailable(),
                         $oldArena->getPosition(),
                         $oldArena->getTeam()
                     );

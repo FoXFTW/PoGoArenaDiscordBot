@@ -10,6 +10,7 @@ namespace Octofox\PoGo\MessageGenerator;
 use Octofox\PoGo\ArenaBot\Diff\ArenaDiff;
 use Octofox\PoGo\ArenaBot\Map\Entities\Arena\Arena;
 use Octofox\PoGo\ArenaBot\Map\Teams\TeamFactory;
+use Octofox\PoGo\Config;
 
 class ArenaMessageGenerator implements MessageInterface
 {
@@ -25,7 +26,7 @@ class ArenaMessageGenerator implements MessageInterface
     public function __construct(ArenaDiff $diff)
     {
         $this->arenaDiff = $diff;
-        $this->teamToMonitor = TeamFactory::getTeam(TEAM_ID_TO_MONITOR);
+        $this->teamToMonitor = TeamFactory::getTeam(intval(Config::getTeamIdToMonitor()));
     }
 
     public function getMessage(): string
@@ -33,19 +34,19 @@ class ArenaMessageGenerator implements MessageInterface
         $wonString = "";
         $lostString = "";
 
-        if (count($this->arenaDiff->getWonArenas()->getArenas()) > 0) {
+        if (count($this->arenaDiff->getWonArenas()) > 0) {
             $wonString = "**Gewonnene Arenen:**\n";
         }
 
-        if (count($this->arenaDiff->getLostArenas()->getArenas()) > 0) {
+        if (count($this->arenaDiff->getLostArenas()) > 0) {
             $lostString = "**Verlorene Arenen:**\n";
         }
 
-        foreach ($this->arenaDiff->getWonArenas()->getArenas() as $arena) {
+        foreach ($this->arenaDiff->getWonArenas() as $arena) {
             $wonString .= $this->parseArenaToString($arena, self::WON);
         }
 
-        foreach ($this->arenaDiff->getLostArenas()->getArenas() as $arena) {
+        foreach ($this->arenaDiff->getLostArenas() as $arena) {
             $lostString .= $this->parseArenaToString($arena, self::LOST);
         }
 
