@@ -32,6 +32,4 @@ class RawDataConfig extends AbstractBaseConfig
         'oNeLat'        => '52.42355825876934',
         'oNeLng'        => '10.961785734960586',
     ];
-
-
 }
