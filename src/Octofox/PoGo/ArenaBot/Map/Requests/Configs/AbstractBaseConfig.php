@@ -10,6 +10,8 @@ namespace Octofox\PoGo\ArenaBot\Map\Requests\Configs;
 
 use Octofox\Exceptions\InvalidDataException;
 use Octofox\PoGo\ArenaBot\Map\Requests\AbstractBaseRequest;
+use Octofox\PoGo\ArenaBot\Server\ConsoleLogger;
+use Octofox\PoGo\Config;
 
 abstract class AbstractBaseConfig implements ConfigInterface
 {
@@ -24,9 +26,9 @@ abstract class AbstractBaseConfig implements ConfigInterface
         }
     }
 
-    protected function requestToken(): string
+    protected static function requestToken(?bool $force = false): string
     {
-        if (self::$token !== '') {
+        if (self::$token !== '' && $force === false) {
             return self::$token;
         }
 
@@ -47,8 +49,32 @@ abstract class AbstractBaseConfig implements ConfigInterface
     public function getConfig(): array
     {
         $this->config['timestamp'] = time();
-        $this->config['token'] = $this->requestToken();
+        $this->config['token'] = self::requestToken();
 
         return $this->config;
+    }
+
+    public static function requestNewToken(): string
+    {
+        $i = 0;
+        self::$token = null;
+        do {
+            try {
+                self::requestToken(true);
+            } catch (InvalidDataException $e) {
+                ConsoleLogger::error("Getting new Token failed, trying again. Pass {$i} out of 10");
+            }
+
+            if (!is_null(self::$token)) {
+                return self::$token;
+            }
+        } while ($i < 10 && !is_null(self::$token));
+
+        ConsoleLogger::error(
+            "Could not request a new Token. Sleeping for ".Config::getPollInterval()." seconds before trying again."
+        );
+        sleep(intval(Config::getPollInterval()));
+
+        return self::requestNewToken();
     }
 }

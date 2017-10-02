@@ -8,6 +8,7 @@
 namespace Octofox\PoGo\ArenaBot\Server;
 
 use GuzzleHttp\Exception\ClientException;
+use Octofox\Exceptions\InvalidDataException;
 use Octofox\PoGo\ArenaBot\Diff\Checker\ArenaDiffChecker;
 use Octofox\PoGo\ArenaBot\Map\Collections\ArenaCollection;
 use Octofox\PoGo\ArenaBot\Map\Parser\ArenaParser;
@@ -93,6 +94,10 @@ class Server
             return $this->arenaParser->parse();
         } catch (ClientException $e) {
             ConsoleLogger::error("Polling failed with Message: {$e->getMessage()}");
+            ConsoleLogger::info("Requesting new Token");
+
+            $token = RawDataConfig::requestNewToken();
+            ConsoleLogger::info("Got Token: {$token}");
         }
 
         return new ArenaCollection();
@@ -100,7 +105,13 @@ class Server
 
     private function getDiffMessage(ArenaCollection $pollData): string
     {
-        $this->arenaDiffChecker = new ArenaDiffChecker($this->arenaCollection, $pollData);
+        try {
+            $this->arenaDiffChecker = new ArenaDiffChecker($this->arenaCollection, $pollData);
+        } catch (InvalidDataException $e) {
+            ConsoleLogger::error($e->getMessage());
+
+            return '';
+        }
 
         $this->arenaDiffMessage = new ArenaMessageGenerator($this->arenaDiffChecker->getDiff());
 
