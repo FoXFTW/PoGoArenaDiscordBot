@@ -7,6 +7,12 @@
 
 namespace Octofox\Exceptions;
 
+/**
+ * Class MissingConfigOptionException
+ * Thrown if required config option is missing in config.ini
+ *
+ * @package Octofox\Exceptions
+ */
 class MissingConfigOptionException extends \Exception
 {
 

@@ -7,6 +7,12 @@
 
 namespace Octofox\Exceptions;
 
+/**
+ * Class InvalidDataException
+ * Thrown if given data does not pass validation
+ *
+ * @package Octofox\Exceptions
+ */
 class InvalidDataException extends \Exception
 {
 
