@@ -11,7 +11,7 @@ use Octofox\PoGo\ArenaBot\Map\Entities\Arena\Arena;
 use Octofox\Exceptions\InvalidDataException;
 use Octofox\PoGo\ArenaBot\Map\Collections\ArenaCollection;
 use Octofox\PoGo\ArenaBot\Map\Helper\Position;
-use Octofox\PoGo\ArenaBot\Map\Teams\TeamFactory;
+use Octofox\PoGo\ArenaBot\Map\Team\TeamFactory;
 
 class ArenaParser
 {

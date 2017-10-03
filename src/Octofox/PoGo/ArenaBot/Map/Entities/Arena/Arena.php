@@ -8,7 +8,7 @@
 namespace Octofox\PoGo\ArenaBot\Map\Entities\Arena;
 
 use Octofox\PoGo\ArenaBot\Map\Helper\Position;
-use Octofox\PoGo\ArenaBot\Map\Teams\TeamInterface;
+use Octofox\PoGo\ArenaBot\Map\Team\TeamInterface;
 
 class Arena extends AbstractBaseArena
 {

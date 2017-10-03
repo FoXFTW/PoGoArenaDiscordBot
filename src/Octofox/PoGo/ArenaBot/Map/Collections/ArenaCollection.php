@@ -7,10 +7,12 @@
 
 namespace Octofox\PoGo\ArenaBot\Map\Collections;
 
+use Octofox\Exceptions\InvalidDataException;
+use Octofox\Interfaces\CollectionInterface;
 use Octofox\PoGo\ArenaBot\Map\Entities\Arena\ArenaInterface;
 use Octofox\PoGo\ArenaBot\Map\Entities\Arena\NullArena;
 
-class ArenaCollection implements \Iterator, \Countable
+class ArenaCollection implements CollectionInterface, \Iterator, \Countable
 {
     private $arenas = [];
     private $keys = [];
@@ -18,8 +20,12 @@ class ArenaCollection implements \Iterator, \Countable
 
     private $hash = '';
 
-    public function addArena(ArenaInterface $arena): array
+    public function add($arena): array
     {
+        if (!$arena instanceof ArenaInterface) {
+            throw new InvalidDataException('Object must implement ArenaInterface');
+        }
+
         $this->arenas[$arena->getID()] = $arena;
         $this->updateHash();
 
@@ -28,7 +34,7 @@ class ArenaCollection implements \Iterator, \Countable
         return $this->arenas;
     }
 
-    public function find(string $id): ArenaInterface
+    public function find($id): ArenaInterface
     {
         if (!isset($this->arenas[$id])) {
             return new NullArena();
@@ -37,7 +43,7 @@ class ArenaCollection implements \Iterator, \Countable
         return $this->arenas[$id];
     }
 
-    public function getArenas(): array
+    public function all(): array
     {
         return $this->arenas;
     }
@@ -47,7 +53,7 @@ class ArenaCollection implements \Iterator, \Countable
         return $this->hash;
     }
 
-    public function equals(ArenaCollection $collection): bool
+    public function equals(CollectionInterface $collection): bool
     {
         return $this->hash === $collection->getHash();
     }

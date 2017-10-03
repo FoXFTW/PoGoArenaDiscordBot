@@ -8,7 +8,7 @@
 namespace Octofox\PoGo\ArenaBot\Map\Entities\Arena;
 
 use Octofox\PoGo\ArenaBot\Map\Helper\NullPosition;
-use Octofox\PoGo\ArenaBot\Map\Teams\NullTeam;
+use Octofox\PoGo\ArenaBot\Map\Team\NoTeam;
 
 class NullArena extends AbstractBaseArena
 {
@@ -17,7 +17,7 @@ class NullArena extends AbstractBaseArena
         $this->id = '';
         $this->position = new NullPosition();
         $this->name = '';
-        $this->team = new NullTeam();
+        $this->team = new NoTeam();
 
         $this->hash = null;
     }
