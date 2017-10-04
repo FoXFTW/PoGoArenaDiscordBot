@@ -9,7 +9,22 @@ namespace Octofox\PoGo\ArenaBot\Map\Team;
 
 class Valor implements TeamInterface
 {
-    const ID = 2;
-    const NAME = 'Valor';
-    const EMOJI = ':fire:';
+    public const ID = 2;
+    public const NAME = 'Valor';
+    public const EMOJI = ':fire:';
+
+    public function emoji(): string
+    {
+        return static::EMOJI;
+    }
+
+    public function id(): int
+    {
+        return static::ID;
+    }
+
+    public function name(): string
+    {
+        return static::NAME;
+    }
 }

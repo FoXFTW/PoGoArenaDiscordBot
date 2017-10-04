@@ -35,7 +35,22 @@ class AppConfig extends Config implements SingletonInterface
     {
         return [
             'map'    => [
-                'monitored_team_id' => 1,
+                'monitored_team_id'    => 1,
+                'rocketmap'            => [
+                    'pokemon'       => 'false',
+                    'lastpokemon'   => 'false',
+                    'pokestops'     => 'false',
+                    'lastpokestops' => 'false',
+                    'luredonly'     => 'false',
+                    'lastgyms'      => 'false',
+                    'scanned'       => 'false',
+                    'lastslocs'     => 'false',
+                    'spawnpoints'   => 'false',
+                    'lastspawns'    => 'false',
+                    'gyms'          => 'true',
+                ],
+                'sleep_time_on_error'  => 120,
+                'retry_count_on_error' => 10,
             ],
             'server' => [
                 'poll_interval' => 120,

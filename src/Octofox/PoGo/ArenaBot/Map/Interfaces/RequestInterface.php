@@ -5,7 +5,7 @@
  * Time: 20:22
  */
 
-namespace Octofox\Interfaces;
+namespace Octofox\PoGo\ArenaBot\Map\Interfaces;
 
 interface RequestInterface
 {

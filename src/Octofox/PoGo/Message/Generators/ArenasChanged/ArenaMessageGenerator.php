@@ -73,13 +73,13 @@ class ArenaMessageGenerator implements MessageGeneratorInterface
             if ($arena->getSlotsAvailable() === 1) {
                 $platz = "Platz";
             }
-            $string .= "{$arena->getTeam()::EMOJI}".self::ARROW_EMOJI."{$this->teamToMonitor::EMOJI})\n";
+            $string .= "{$arena->getTeam()->emoji()}".self::ARROW_EMOJI."{$this->teamToMonitor->emoji()})\n";
             $string .= ($arena->getSlotsAvailable() === 0 ? 'Keine' : $arena->getSlotsAvailable())." {$platz} frei\n";
         } else {
             if ((6 - $arena->getSlotsAvailable()) === 1) {
                 $platz = "Platz";
             }
-            $string .= "{$this->teamToMonitor::EMOJI}".self::ARROW_EMOJI."{$arena->getTeam()::EMOJI})\n";
+            $string .= "{$this->teamToMonitor->emoji()}".self::ARROW_EMOJI."{$arena->getTeam()->emoji()})\n";
             $string .= (6 - $arena->getSlotsAvailable())." {$platz} besetzt\n";
         }
 

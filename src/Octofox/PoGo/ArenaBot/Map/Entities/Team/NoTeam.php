@@ -9,7 +9,22 @@ namespace Octofox\PoGo\ArenaBot\Map\Team;
 
 class NoTeam implements TeamInterface
 {
-    const ID = 0;
-    const NAME = '';
-    const EMOJI = ':white_circle:';
+    public const ID = 0;
+    public const NAME = '';
+    public const EMOJI = ':white_circle:';
+
+    public function emoji(): string
+    {
+        return static::EMOJI;
+    }
+
+    public function id(): int
+    {
+        return static::ID;
+    }
+
+    public function name(): string
+    {
+        return static::NAME;
+    }
 }

@@ -9,7 +9,22 @@ namespace Octofox\PoGo\ArenaBot\Map\Team;
 
 class Instinct implements TeamInterface
 {
-    const ID = 3;
-    const NAME = 'Instinct';
-    const EMOJI = ':zap:';
+    public const ID = 3;
+    public const NAME = 'Instinct';
+    public const EMOJI = ':zap:';
+
+    public function emoji(): string
+    {
+        return static::EMOJI;
+    }
+
+    public function id(): int
+    {
+        return static::ID;
+    }
+
+    public function name(): string
+    {
+        return static::NAME;
+    }
 }

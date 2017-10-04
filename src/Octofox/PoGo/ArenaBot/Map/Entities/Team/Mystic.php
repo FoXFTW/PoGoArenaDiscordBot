@@ -9,7 +9,22 @@ namespace Octofox\PoGo\ArenaBot\Map\Team;
 
 class Mystic implements TeamInterface
 {
-    const ID = 1;
-    const NAME = 'Mystic';
-    const EMOJI = ':snowflake:';
+    public const ID = 1;
+    public const NAME = 'Mystic';
+    public const EMOJI = ':snowflake:';
+
+    public function emoji(): string
+    {
+        return static::EMOJI;
+    }
+
+    public function id(): int
+    {
+        return static::ID;
+    }
+
+    public function name(): string
+    {
+        return static::NAME;
+    }
 }

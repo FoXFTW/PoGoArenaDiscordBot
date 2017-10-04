@@ -17,4 +17,10 @@ $logger = new \Octofox\PoGo\ArenaBot\Server\ConsoleLogger();
 
 $server = new \Octofox\PoGo\ArenaBot\Server\Server($config);
 $server->setLogger($logger);
+
+$map = \Octofox\PoGo\ArenaBot\Map\MapFactory::get('rocketmap');
+
+$server->setMap($map);
+$server->setMessageGateway(new \Octofox\PoGo\Message\Gateways\Discord\WebHook($config));
+
 $server->run();

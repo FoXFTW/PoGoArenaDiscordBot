@@ -9,4 +9,7 @@ namespace Octofox\PoGo\ArenaBot\Map\Team;
 
 interface TeamInterface
 {
+    public function emoji(): string;
+    public function id(): int;
+    public function name(): string;
 }

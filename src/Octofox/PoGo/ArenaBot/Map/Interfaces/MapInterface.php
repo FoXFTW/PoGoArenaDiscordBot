@@ -12,6 +12,4 @@ use Octofox\PoGo\ArenaBot\Map\Collections\ArenaCollection;
 interface MapInterface
 {
     public function getArenas(): ArenaCollection;
-
-    public function setConfig(array $config): void;
 }

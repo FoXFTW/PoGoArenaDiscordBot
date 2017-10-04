@@ -5,15 +5,16 @@
  * Time: 19:08
  */
 
-namespace Octofox\PoGo\ArenaBot\Map\Parser;
+namespace Octofox\PoGo\ArenaBot\Map\Adapter\RocketMap\Parser;
 
 use Octofox\PoGo\ArenaBot\Map\Entities\Arena\Arena;
 use Octofox\Exceptions\InvalidDataException;
 use Octofox\PoGo\ArenaBot\Map\Collections\ArenaCollection;
 use Octofox\PoGo\ArenaBot\Map\Helper\Position;
+use Octofox\PoGo\ArenaBot\Map\Interfaces\ParserInterface;
 use Octofox\PoGo\ArenaBot\Map\Team\TeamFactory;
 
-class ArenaParser
+class ArenaParser implements ParserInterface
 {
     private $rawData;
     private $gyms;
@@ -37,7 +38,7 @@ class ArenaParser
 
         foreach ($this->gyms as $gym) {
             if ($gym['enabled']) {
-                $arenaCollection->addArena($this->parseArena($gym));
+                $arenaCollection->add($this->parseArena($gym));
             }
         }
 
@@ -57,7 +58,7 @@ class ArenaParser
     private function parseArena(array $rawArenaData): Arena
     {
         $position = new Position($rawArenaData['latitude'], $rawArenaData['longitude']);
-        $team = TeamFactory::getTeam($rawArenaData['team_id'] ?? 0);
+        $team = TeamFactory::get($rawArenaData['team_id'] ?? 0);
 
         return new Arena($rawArenaData['gym_id'], $rawArenaData['name'] ?? 'No Name', intval($rawArenaData['slots_available']), $position, $team);
     }
