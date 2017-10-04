@@ -70,9 +70,10 @@ class Server implements LoggerAwareInterface
                         }
                     }
                 }
+                $this->oldArenas = $arenas;
             }
 
-            $this->logger->debug("Sleeping for {$this->config['server.poll_interval']} seconds.");
+            $this->logger->info("Sleeping for {$this->config['server.poll_interval']} seconds.");
             sleep($this->config['server.poll_interval']);
         }
     }
