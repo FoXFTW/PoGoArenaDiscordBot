@@ -37,9 +37,7 @@ class ArenaParser implements ParserInterface
         $arenaCollection = new ArenaCollection();
 
         foreach ($this->gyms as $gym) {
-            if ($gym['enabled']) {
-                $arenaCollection->add($this->parseArena($gym));
-            }
+			$arenaCollection->add($this->parseArena($gym));
         }
 
         return $arenaCollection;
