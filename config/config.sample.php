@@ -2,7 +2,7 @@
 
 return [
     'map'    => [
-        // Currently 'rocketmap' and 'gomap' are supported
+        // Currently only 'rocketmap' is supported
         'map_type'             => 'example_type',
         'rocketmap'            => [
             'pokemon'       => 'false',
