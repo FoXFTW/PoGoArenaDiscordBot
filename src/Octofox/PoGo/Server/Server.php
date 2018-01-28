@@ -62,8 +62,12 @@ class Server implements LoggerAwareInterface
                         TeamFactory::get($this->config['map.monitored_team_id'])
                     );
 
-                    if (!$this->messageGateway->send($messageGenerator->getMessage())) {
-                        $this->logger->error('Sending message through gateway failed!');
+                    $message = $messageGenerator->getMessage();
+
+                    if (!empty($message)) {
+                        if (!$this->messageGateway->send($message)) {
+                            $this->logger->error('Sending message through gateway failed!');
+                        }
                     }
                 }
             }
